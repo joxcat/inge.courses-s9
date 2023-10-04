@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  ros:
+    container_name: 'ros2'
+    hostname: 'localhost'
+    #build:
+    #  context: build
+    #  args:
+    #    UID: 1000
+    #    GID: 1000
+    #    INPUT_GID: 994
+    image: registry.gitlab.com/js-ros-training/ros-training-docker-public/ros-humble-desktop-stage:v1 
+    entrypoint: sh -c 'echo "ROS is ready" && tail -f /dev/null'
+    #working_dir: /home/notroot/projects
+    working_dir: /home/tp/ros_ws/
+    network_mode: "host"
+    environment:
+      DISPLAY: $DISPLAY.0
+      EDITOR: vim  
+      ROS_DOMAIN_ID: 42
+      ROS_LOCALHOST_ONLY: 0
+      # ROS_DISCOVERY_SERVER: 127.0.0.1:11811
+      # FASTRTPS_DEFAULT_PROFILES_FILE: /home/notroot/projects/super_client_configuration_file.xml
+    ports:
+      - 11811:11811
+    privileged: true
+    volumes:
+      - /dev/input:/dev/input
+      #- ./ros_data:/home/notroot/.ros:rw
+      #- ./projects:/home/notroot/projects:rw
+      - ./projects/global_planner_short_path_student:/home/tp/ros_ws/src/global_planner_short_path_student
+      #- $HOME/.Xauthority:/home/notroot/.Xauthority:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
