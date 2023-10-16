@@ -1,0 +1,18 @@
+- id: '1695193434950'
+  alias: Air Flow
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: /temperature
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.temperature
+    above: 2048
+  action:
+  - service: mqtt.publish
+    data:
+      qos: '1'
+      retain: false
+      topic: /air_flow
+      payload: '{{ ((trigger.payload|int) / 4096 * 128) | round(0) }}'
+  mode: single

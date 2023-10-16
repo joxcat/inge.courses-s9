@@ -1,0 +1,37 @@
+esphome:
+  name: esp-julien
+
+esp32:
+  board: ttgo-lora32-v1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "7OBITD+kKmCXS8WT9Qqaefy86iWIXm88V4gUvD1CrdQ="
+
+ota:
+  password: "d8e66c3e610b0fed9923efceecc93314"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-Julien Fallback Hotspot"
+    password: "K9tRZUFIP2Sm"
+
+captive_portal:
+
+sensor:
+  - id: temp_input
+    name: "Georges"
+    platform: adc
+    pin: GPIO36
+    update_interval: 1s
+    raw: true

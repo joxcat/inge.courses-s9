@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant
+    container_name: homeassistant
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      # Update the different configs inside with the Part's ones
+      - ./docker/home-assistant:/config
+    restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto_broker
+    command: mosquitto -v -c /mosquitto-no-auth.conf
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome
+    volumes:
+      - ./docker/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    network_mode: host   

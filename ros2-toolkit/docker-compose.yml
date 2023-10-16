@@ -4,13 +4,13 @@ services:
   ros:
     container_name: 'ros2'
     hostname: 'localhost'
-    #build:
-    #  context: build
-    #  args:
-    #    UID: 1000
-    #    GID: 1000
-    #    INPUT_GID: 994
-    image: registry.gitlab.com/js-ros-training/ros-training-docker-public/ros-humble-desktop-stage:v1 
+    build:
+      context: build
+      args:
+        UID: 1000
+        GID: 1000
+        INPUT_GID: 994
+    #image: registry.gitlab.com/js-ros-training/ros-training-docker-public/ros-humble-desktop-stage:v1 
     entrypoint: sh -c 'echo "ROS is ready" && tail -f /dev/null'
     #working_dir: /home/notroot/projects
     working_dir: /home/tp/ros_ws/
@@ -30,5 +30,9 @@ services:
       #- ./ros_data:/home/notroot/.ros:rw
       #- ./projects:/home/notroot/projects:rw
       - ./projects/global_planner_short_path_student:/home/tp/ros_ws/src/global_planner_short_path_student
+      - ./projects/local_planner_student/local_planner_student:/home/tp/ros_ws/src/local_planner_student
+      - ./projects/local_planner_student/local_planner_srvs:/home/tp/ros_ws/src/local_planner_srvs
+      - ./projects/training-turtlebot-simulator-student/simulation:/home/tp/ros_ws/src/simulation
+      - ./projects/training-turtlebot-simulator-student/turtlebot_gazebo:/home/tp/ros_ws/src/turtlebot_gazebo
       #- $HOME/.Xauthority:/home/notroot/.Xauthority:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw

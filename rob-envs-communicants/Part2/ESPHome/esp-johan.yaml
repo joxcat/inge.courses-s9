@@ -1,0 +1,54 @@
+esphome:
+  name: esp-johan
+
+esp32:
+  board: ttgo-lora32-v1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "7OBITD+kKmCXS8WT9Qqaefy86iWIXm88V4gUvD1CrdQ="
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "CPE-Domotique"
+  password: "astro4student"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-Johan Fallback Hotspot"
+    password: "7StmURf05XKp"
+
+captive_portal:
+
+# Servomotor
+number:
+  - platform: template
+    name: Servo Control
+    min_value: -100
+    initial_value: 0
+    max_value: 100
+    step: 1
+    optimistic: true
+    set_action:
+      then:
+        - servo.write:
+            id: my_cervo
+            level: !lambda 'return x / 100.0;'
+
+servo:
+  - id: my_cervo
+    output: pwm_output
+
+output:
+  - platform: ledc
+    id: pwm_output
+    pin: GPIO13
+    frequency: 50 Hz

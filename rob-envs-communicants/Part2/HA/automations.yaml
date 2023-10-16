@@ -1,0 +1,18 @@
+- id: '1695215994192'
+  alias: ESPHOME-auto
+  description: ''
+  trigger:
+  - type: voltage
+    platform: device
+    device_id: c5adbe7b200f9459949c135936b9b8bc
+    entity_id: 0637fb2c92b986657b7a9bda9be42d46
+    domain: sensor
+    above: 2048
+  condition: []
+  action:
+  - device_id: 4de30dafc07029c413d8115317ae9186
+    domain: number
+    entity_id: b58c4ddc36c55292bacdca36be51e988
+    type: set_value
+    value: 30
+  mode: single
